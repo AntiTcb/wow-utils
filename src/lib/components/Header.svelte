@@ -7,7 +7,10 @@
         HeaderAction,
         HeaderPanelLinks,
         HeaderPanelLink,
-        HeaderGlobalAction
+        SideNav,
+        SideNavItems,
+        SideNavLink
+
     } from 'carbon-components-svelte';
     import SettingsAdjust from 'carbon-icons-svelte/lib/SettingsAdjust.svelte';
     import { defaultRealm, defaultFaction } from '$lib/stores/appOptions';
@@ -15,6 +18,7 @@
     import FactionSelect from '$lib/components/FactionSelect.svelte';
 
     let isOpen = false;
+    let isSideNavOpen = false;
 
     const handleLinkClick = (e) => {
         if (!$defaultRealm || !$defaultFaction) {
@@ -24,23 +28,12 @@
     };
 </script>
 
-<Header platformName="Wow Utils" href="/">
+<Header platformName="Wow Utils" href="/" bind:isSideNavOpen persistentHamburgerMenu={true}>
     <span slot="platform">
         <a class="bx--header__name" href="/">
             <img src="/favicon-32x32.png" alt="WoW Utils" /> <span class="ml-2">Wow Utils</span>
         </a>
     </span>
-    <HeaderNav>
-        {#if $defaultRealm && $defaultFaction}
-            <HeaderNavItem
-                text="Server Price Comparison"
-                href="/compare/{$defaultRealm}/{$defaultFaction}"
-                on:click={handleLinkClick}
-            />
-        {:else}
-            <HeaderNavItem text="Server Price Comparison" href="/compare" />
-        {/if}
-    </HeaderNav>
     <HeaderUtilities>
         <HeaderAction icon={SettingsAdjust} bind:isOpen>
             <HeaderPanelLinks>
@@ -50,6 +43,19 @@
             </HeaderPanelLinks>
         </HeaderAction>
     </HeaderUtilities>
+    <SideNav bind:isOpen={isSideNavOpen}>
+        <SideNavItems>
+            {#if $defaultRealm && $defaultFaction}
+            <SideNavLink
+                text="Server Price Comparison"
+                href="/compare/{$defaultRealm}/{$defaultFaction}"
+                on:click={handleLinkClick}
+            />
+            {:else}
+                <SideNavLink text="Server Price Comparison" href="/compare" />
+            {/if}
+        </SideNavItems>
+    </SideNav>
 </Header>
 
 <style>
