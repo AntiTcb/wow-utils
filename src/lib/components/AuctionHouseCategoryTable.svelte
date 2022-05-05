@@ -28,6 +28,8 @@
         page: 1
     };
 
+    $: filteredItems = items.filter((i) => i.itemName.toUpperCase().indexOf(search.toUpperCase()) !== -1);
+
     const getServerItemPrice = async (realm, faction, itemUniqueName) => {
         const res = await fetch(
             `https://api.nexushub.co/wow-classic/v1/items/${realm}-${faction}/${itemUniqueName}`,
@@ -105,7 +107,8 @@
         { key: 'minBuyout', value: 'Min Buyout' },
         { key: 'marketValue', value: 'Market Value' }
     ];
-    const rows = items.map((i) => {
+
+    $: rows = filteredItems.map((i) => {
         const rowItem = {
             id: i.itemId,
             itemId: i.itemId,
@@ -136,7 +139,7 @@
     {...$$restProps}
 >
     <summary class="is-size-4" on:click={() => (lazyLoaded = true)}
-        >{category} {items.length ? `(${items.length})` : ''}</summary
+        >{category} {filteredItems.length ? `(${filteredItems.length})` : ''}</summary
     >
     {#if lazyLoaded}
         <DataTable
@@ -212,7 +215,7 @@
             bind:pageSize={pagination.pageSize}
             bind:pageSizes={pagination.pageSizes}
             bind:page={pagination.page}
-            totalItems={items.length}
+            totalItems={filteredItems.length}
             on:click:button--previous={() => removeDynamicRows()}
             on:click:button--next={() => removeDynamicRows()}
         />
