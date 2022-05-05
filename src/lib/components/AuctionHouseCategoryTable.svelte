@@ -9,6 +9,7 @@
     import FactionSelect from '$lib/components/FactionSelect.svelte';
     import RealmSelect from '$lib/components/RealmSelect.svelte';
     import OutboundLink from '$lib/components/OutboundLink.svelte';
+    import { comparisonRealm, comparisonFaction } from '$lib/stores/appOptions';
 
     export let category;
     export let items;
@@ -17,8 +18,8 @@
     export let search = '';
     export let display = 'block';
 
-    let comparisonRealm = '';
-    let comparisonFaction = '';
+    $: comparisonRealmSelection = $comparisonRealm ? $comparisonRealm : '';
+    $: comparisonFactionSelection = $comparisonFaction ? $comparisonFaction : '';
 
     let lazyLoaded = false;
 
@@ -27,6 +28,8 @@
         pageSizes: [10, 25],
         page: 1
     };
+
+    $: filteredItems = items.filter((i) => i.itemName.toUpperCase().indexOf(search.toUpperCase()) !== -1);
 
     const getServerItemPrice = async (realm, faction, itemUniqueName) => {
         const res = await fetch(
@@ -105,7 +108,8 @@
         { key: 'minBuyout', value: 'Min Buyout' },
         { key: 'marketValue', value: 'Market Value' }
     ];
-    const rows = items.map((i) => {
+
+    $: rows = filteredItems.map((i) => {
         const rowItem = {
             id: i.itemId,
             itemId: i.itemId,
@@ -136,7 +140,7 @@
     {...$$restProps}
 >
     <summary class="is-size-4" on:click={() => (lazyLoaded = true)}
-        >{category} {items.length ? `(${items.length})` : ''}</summary
+        >{category} {filteredItems.length ? `(${filteredItems.length})` : ''}</summary
     >
     {#if lazyLoaded}
         <DataTable
@@ -188,10 +192,10 @@
                     class="add-comparison-container is-inline-flex is-justify-content-end is-align-items-end p-1"
                 >
                     <RealmSelect
-                        bind:selected={comparisonRealm}
+                        bind:selected={comparisonRealmSelection}
                         serverFilter={(s) => s.slug !== realm}
                     />
-                    <FactionSelect bind:selected={comparisonFaction} />
+                    <FactionSelect bind:selected={comparisonFactionSelection} />
                     <button
                         class="button is-rounded is-smaller"
                         type="button"
@@ -212,7 +216,7 @@
             bind:pageSize={pagination.pageSize}
             bind:pageSizes={pagination.pageSizes}
             bind:page={pagination.page}
-            totalItems={items.length}
+            totalItems={filteredItems.length}
             on:click:button--previous={() => removeDynamicRows()}
             on:click:button--next={() => removeDynamicRows()}
         />

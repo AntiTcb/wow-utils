@@ -11,3 +11,6 @@ Created with Svelte & SvelteKit
 ## Contributing
 
 Clone the repo, `pnpm install`, then `pnpm run dev` and you're off!
+
+## About
+This site uses the [NexusHub](https://nexushub.co/wow-classic) API for pulling its pricing information.

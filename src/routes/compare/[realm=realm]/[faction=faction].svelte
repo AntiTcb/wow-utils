@@ -21,7 +21,7 @@
 
     export let overview = [];
 
-    let searchTerm = '';
+    $: searchTerm = '';
 
     $: itemsFiltered = $items
         .map((i) => {

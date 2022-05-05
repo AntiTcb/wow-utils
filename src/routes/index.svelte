@@ -3,9 +3,14 @@
 
     let notes = [
         {
+            version: '1.0.1',
+            text: 'Bugfixes, added settings for default realms/factions to compare with.',
+            open: true
+        },
+        {
             version: '1.0.0',
             text: 'First tool completed! The <a href="/compare">Server Price Comparison</a> tool is now available.',
-            open: true
+            open: false
         }
     ];
 </script>
