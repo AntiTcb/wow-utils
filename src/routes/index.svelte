@@ -3,7 +3,7 @@
 
     let notes = [
         {
-            version: '1.0.1',
+            version: '1.0.2',
             text: 'Bugfixes, added settings for default realms/factions to compare with.',
             open: true
         },
