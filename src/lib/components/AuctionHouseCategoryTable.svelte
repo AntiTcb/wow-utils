@@ -201,8 +201,8 @@
                         type="button"
                         on:click={async () =>
                             await addServerComparison(
-                                comparisonRealm,
-                                comparisonFaction,
+                                comparisonRealmSelection,
+                                comparisonFactionSelection,
                                 row.uniqueName,
                                 row.id
                             )}
