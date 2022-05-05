@@ -9,6 +9,7 @@
     import FactionSelect from '$lib/components/FactionSelect.svelte';
     import RealmSelect from '$lib/components/RealmSelect.svelte';
     import OutboundLink from '$lib/components/OutboundLink.svelte';
+    import { comparisonRealm, comparisonFaction } from '$lib/stores/appOptions';
 
     export let category;
     export let items;
@@ -17,8 +18,8 @@
     export let search = '';
     export let display = 'block';
 
-    let comparisonRealm = '';
-    let comparisonFaction = '';
+    $: comparisonRealmSelection = $comparisonRealm ? $comparisonRealm : '';
+    $: comparisonFactionSelection = $comparisonFaction ? $comparisonFaction : '';
 
     let lazyLoaded = false;
 
@@ -191,10 +192,10 @@
                     class="add-comparison-container is-inline-flex is-justify-content-end is-align-items-end p-1"
                 >
                     <RealmSelect
-                        bind:selected={comparisonRealm}
+                        bind:selected={comparisonRealmSelection}
                         serverFilter={(s) => s.slug !== realm}
                     />
-                    <FactionSelect bind:selected={comparisonFaction} />
+                    <FactionSelect bind:selected={comparisonFactionSelection} />
                     <button
                         class="button is-rounded is-smaller"
                         type="button"

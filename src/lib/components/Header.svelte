@@ -1,10 +1,9 @@
 <script>
     import {
         Header,
-        HeaderNav,
-        HeaderNavItem,
         HeaderUtilities,
         HeaderAction,
+        HeaderPanelDivider,
         HeaderPanelLinks,
         HeaderPanelLink,
         SideNav,
@@ -13,7 +12,7 @@
 
     } from 'carbon-components-svelte';
     import SettingsAdjust from 'carbon-icons-svelte/lib/SettingsAdjust.svelte';
-    import { defaultRealm, defaultFaction } from '$lib/stores/appOptions';
+    import { defaultRealm, defaultFaction, comparisonRealm, comparisonFaction } from '$lib/stores/appOptions';
     import RealmSelect from '$lib/components/RealmSelect.svelte';
     import FactionSelect from '$lib/components/FactionSelect.svelte';
 
@@ -37,9 +36,13 @@
     <HeaderUtilities>
         <HeaderAction icon={SettingsAdjust} bind:isOpen>
             <HeaderPanelLinks>
-                <HeaderPanelLink>Default Realm/Server</HeaderPanelLink>
+                <HeaderPanelLink>Home Realm/Faction</HeaderPanelLink>
                 <RealmSelect bind:selected={$defaultRealm} class="nav-select" />
                 <FactionSelect bind:selected={$defaultFaction} class="nav-select" />
+                <HeaderPanelDivider />
+                <HeaderPanelLink>Comparison Realm/Faction</HeaderPanelLink>
+                <RealmSelect bind:selected={$comparisonRealm} class="nav-select" />
+                <FactionSelect bind:selected={$comparisonFaction} class="nav-select" />
             </HeaderPanelLinks>
         </HeaderAction>
     </HeaderUtilities>
