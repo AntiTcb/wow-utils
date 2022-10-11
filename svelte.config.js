@@ -5,16 +5,6 @@ import adapter from '@sveltejs/adapter-auto';
 const config = {
     kit: {
         adapter: adapter(),
-
-        vite: {
-            css: {
-                preprocessorOptions: {
-                    scss: {
-                        additionalData: '@use "src/variables.scss" as *;'
-                    }
-                }
-            }
-        }
     },
 
     preprocess: [

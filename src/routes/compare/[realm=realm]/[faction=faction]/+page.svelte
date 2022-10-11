@@ -1,17 +1,4 @@
-<script context="module">
-    export async function load({ fetch, params }) {
-        const overviewResponse = await fetch(
-            `https://api.nexushub.co/wow-classic/v1/items/${params.realm}-${params.faction}`.toLowerCase()
-        );
-        const itemOverviewData = await overviewResponse.json();
 
-        return {
-            props: {
-                overview: itemOverviewData.data
-            }
-        };
-    }
-</script>
 
 <script>
     import { page } from '$app/stores';
@@ -19,7 +6,8 @@
     import AuctionHouseCategoryTable from '$lib/components/AuctionHouseCategoryTable.svelte';
     import { Button, TooltipDefinition, TextInput } from 'carbon-components-svelte';
 
-    export let overview = [];
+    export let data;
+    let { overview } = data;
 
     $: searchTerm = '';
 

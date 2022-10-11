@@ -1,23 +1,11 @@
-<script context="module">
-    export async function load({ fetch, params }) {
-        const res = await fetch(
-            `https://api.nexushub.co/wow-classic/v1/item/${params.item}`.toLowerCase()
-        );
-        const data = await res.json();
 
-        return {
-            props: {
-                item: data
-            }
-        };
-    }
-</script>
 
 <script>
     import { onMount } from 'svelte';
     import { servers } from '$lib/stores/servers';
 
-    export let item;
+    export let data;
+    let item = { data };
 
     // TODO: localstorage
     let faction = 'alliance';
